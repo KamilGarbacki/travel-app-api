@@ -1,11 +1,17 @@
 package com.kamilgarbacki.Travel_app.TrainStation;
 
+import com.kamilgarbacki.Travel_app.City.City;
+import com.kamilgarbacki.Travel_app.Connection.Connection;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table
 public class TrainStation {
@@ -21,17 +27,15 @@ public class TrainStation {
     )
     private Long id;
     private String name;
-    private String city;
 
-    public TrainStation() {}
-    public TrainStation(Long id, String name, String city) {
-        this.id = id;
-        this.name = name;
-        this.city = city;
-    }
+    @ManyToOne
+    private City city;
 
-    public TrainStation(String name, String city) {
-        this.name = name;
-        this.city = city;
-    }
+    @OneToMany(mappedBy = "departureStation")
+    private List<Connection> Departures;
+
+    @OneToMany(mappedBy = "destinationStation")
+    private List<Connection> Destinations;
+
+
 }

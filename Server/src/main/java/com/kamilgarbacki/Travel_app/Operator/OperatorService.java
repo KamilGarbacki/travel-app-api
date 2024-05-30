@@ -1,16 +1,14 @@
 package com.kamilgarbacki.Travel_app.Operator;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class OperatorService {
     private final OperatorRepository operatorRepository;
-
-    public OperatorService(OperatorRepository operatorRepository) {
-        this.operatorRepository = operatorRepository;
-    }
 
     public List<Operator> getAllOperators() {
         return operatorRepository.findAll();
@@ -19,6 +17,7 @@ public class OperatorService {
     public void addOperator(NewOperatorRequest request) {
         Operator operator = new Operator();
         operator.setName(request.name());
+        operator.setLogo(request.logo());
         operatorRepository.save(operator);
     }
 
@@ -32,6 +31,9 @@ public class OperatorService {
 
         if (request.name() != null && !request.name().isBlank()) {
             operator.setName(request.name());
+        }
+        if(request.logo() != null && !request.logo().isBlank()) {
+            operator.setLogo(request.logo());
         }
         operatorRepository.save(operator);
     }

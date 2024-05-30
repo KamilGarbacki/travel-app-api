@@ -1,11 +1,18 @@
 package com.kamilgarbacki.Travel_app.Operator;
 
+import com.kamilgarbacki.Travel_app.Connection.Connection;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table
 public class Operator {
@@ -21,13 +28,13 @@ public class Operator {
     )
     private Long id;
     private String name;
+    private String logo;
 
-    public Operator() {}
-    public Operator(Long id, String name) {
-        this.id = id;
+    @OneToMany(mappedBy = "operator", orphanRemoval = true)
+    private List<Connection> connections;
+
+    public Operator(String name, String logo) {
         this.name = name;
-    }
-    public Operator(String name) {
-        this.name = name;
+        this.logo = logo;
     }
 }

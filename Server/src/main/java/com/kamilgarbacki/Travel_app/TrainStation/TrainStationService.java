@@ -1,25 +1,25 @@
 package com.kamilgarbacki.Travel_app.TrainStation;
 
+import com.kamilgarbacki.Travel_app.City.City;
+import com.kamilgarbacki.Travel_app.City.CityService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TrainStationService {
     private final TrainStationRepository trainStationRepository;
-
-    public TrainStationService(TrainStationRepository trainStationRepository) {
-        this.trainStationRepository = trainStationRepository;
-    }
+    private final CityService cityService;
 
     public List<TrainStation> getAllTrainStations() {
         return trainStationRepository.findAll();
     }
 
     public void addTrainStation(NewTrainStationRequest request) {
-        TrainStation trainStation = new TrainStation();
-        trainStation.setName(request.name());
-        trainStation.setCity(request.city());
+        City city = cityService.getCityById(request.cityId());
+        TrainStation trainStation = TrainStation.builder().name(request.name()).city(city).build();
         trainStationRepository.save(trainStation);
     }
 
@@ -34,8 +34,9 @@ public class TrainStationService {
         if(request.name() != null && !request.name().isBlank()) {
             trainStation.setName(request.name());
         }
-        if(request.city() != null && !request.city().isBlank()) {
-            trainStation.setCity(request.city());
+        if(request.cityId() != null) {
+            City city = cityService.getCityById(request.cityId());
+            trainStation.setCity(city);
         }
         trainStationRepository.save(trainStation);
     }

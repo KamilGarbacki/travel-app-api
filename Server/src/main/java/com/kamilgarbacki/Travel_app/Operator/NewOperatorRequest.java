@@ -1,3 +1,3 @@
 package com.kamilgarbacki.Travel_app.Operator;
 
-public record NewOperatorRequest(String name) {}
+public record NewOperatorRequest(String name, String logo) {}
