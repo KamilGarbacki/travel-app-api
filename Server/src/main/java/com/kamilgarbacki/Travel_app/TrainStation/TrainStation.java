@@ -1,5 +1,6 @@
 package com.kamilgarbacki.Travel_app.TrainStation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kamilgarbacki.Travel_app.City.City;
 import com.kamilgarbacki.Travel_app.Connection.Connection;
 import jakarta.persistence.*;
@@ -31,10 +32,12 @@ public class TrainStation {
     @ManyToOne
     private City city;
 
-    @OneToMany(mappedBy = "departureStation")
+    @JsonIgnore
+    @OneToMany(mappedBy = "departureStation", orphanRemoval = true)
     private List<Connection> Departures;
 
-    @OneToMany(mappedBy = "destinationStation")
+    @JsonIgnore
+    @OneToMany(mappedBy = "destinationStation", orphanRemoval = true)
     private List<Connection> Destinations;
 
 

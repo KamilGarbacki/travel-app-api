@@ -1,5 +1,6 @@
 package com.kamilgarbacki.Travel_app.City;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kamilgarbacki.Travel_app.TrainStation.TrainStation;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,7 @@ public class City {
     )
     private Long id;
     private String name;
+    @JsonIgnore
     @OneToMany(mappedBy = "city", orphanRemoval = true)
     private List<TrainStation> trainStations;
 

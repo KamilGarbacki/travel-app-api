@@ -29,7 +29,7 @@ public class ConnectionService {
         TrainStation destinationStation = trainStationService.getTrainStationById(request.destinationId());
 
         Connection connection = Connection.builder().operator(operator).departureStation(departureStation).destinationStation(destinationStation)
-                .departureTime(request.departureTime()).price(request.price()).build();
+                .departureTime(request.departureTime()).arrivalTime(request.arrivalTime()).price(request.price()).build();
 
         connectionRepository.save(connection);
     }
@@ -41,6 +41,29 @@ public class ConnectionService {
     public void updateConnection(Long connectionId, NewConnectionRequest request) {
         Connection connection = connectionRepository.findById(connectionId)
                 .orElseThrow(()-> new IllegalStateException("Operator with id: " + connectionId + "does not exist"));
+
+        if(request.operatorId() != null){
+            Operator operator = operatorService.getOperatorById(request.operatorId());
+            connection.setOperator(operator);
+        }
+        if(request.departureId() != null){
+            TrainStation departureStation = trainStationService.getTrainStationById(request.departureId());
+            connection.setDepartureStation(departureStation);
+        }
+        if(request.destinationId() != null){
+            TrainStation destinationStation = trainStationService.getTrainStationById(request.destinationId());
+            connection.setDestinationStation(destinationStation);
+        }
+        if(request.arrivalTime() != null){
+            connection.setArrivalTime(request.arrivalTime());
+        }
+        if(request.departureTime() != null){
+            connection.setDepartureTime(request.departureTime());
+        }
+        if(request.price() != null){
+            connection.setPrice(request.price());
+        }
+        connectionRepository.save(connection);
     }
 
     public Connection getConnection(Long connectionId) {
@@ -48,7 +71,7 @@ public class ConnectionService {
                 .orElseThrow(()-> new IllegalStateException("Operator with id: " + connectionId + "does not exist"));
     }
 
-    public List<Connection> getConnectionByDepartureAndDestination(Long departureId, Long destinationId) {
+    public List<Connection> getConnectionsByDepartureAndDestination(Long departureId, Long destinationId) {
         if(departureId != null && destinationId == null){
             TrainStation departureStation = trainStationService.getTrainStationById(departureId);
             return connectionRepository.findAllByDepartureStation(departureStation);

@@ -1,11 +1,14 @@
 package com.kamilgarbacki.Travel_app.Connection;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kamilgarbacki.Travel_app.Booking.Booking;
 import com.kamilgarbacki.Travel_app.Operator.Operator;
 import com.kamilgarbacki.Travel_app.TrainStation.TrainStation;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -35,6 +38,10 @@ public class Connection {
 
     @ManyToOne
     private TrainStation destinationStation;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "connection", orphanRemoval = true)
+    private List<Booking> bookings;
 
     private LocalTime departureTime;
     private LocalTime arrivalTime;

@@ -1,11 +1,17 @@
 package com.kamilgarbacki.Travel_app.Passenger;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kamilgarbacki.Travel_app.Booking.Booking;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table
 public class Passenger {
@@ -25,18 +31,7 @@ public class Passenger {
     private String email;
     private String phone;
 
-    public Passenger() {}
-    public Passenger(Long id, String fName, String lName, String email, String phone) {
-        this.id = id;
-        this.fName = fName;
-        this.lName = lName;
-        this.email = email;
-        this.phone = phone;
-    }
-    public Passenger(String fName, String lName, String email, String phone) {
-        this.fName = fName;
-        this.lName = lName;
-        this.email = email;
-        this.phone = phone;
-    }
+    @JsonIgnore
+    @OneToMany(mappedBy = "passenger", orphanRemoval = true)
+    private List<Booking> bookings;
 }

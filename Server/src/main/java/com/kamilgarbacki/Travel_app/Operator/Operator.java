@@ -1,5 +1,6 @@
 package com.kamilgarbacki.Travel_app.Operator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kamilgarbacki.Travel_app.Connection.Connection;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class Operator {
     private String name;
     private String logo;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "operator", orphanRemoval = true)
     private List<Connection> connections;
 
