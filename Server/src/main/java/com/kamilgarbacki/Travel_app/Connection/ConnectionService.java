@@ -72,11 +72,11 @@ public class ConnectionService {
     }
 
     public List<Connection> getConnectionsByDepartureAndDestination(Long departureId, Long destinationId) {
-        if(departureId != null && destinationId == null){
+        if(departureId != 0 && destinationId == 0){
             TrainStation departureStation = trainStationService.getTrainStationById(departureId);
             return connectionRepository.findAllByDepartureStation(departureStation);
         }
-        if(departureId == null && destinationId != null){
+        if(departureId == 0 && destinationId != 0){
             TrainStation destinationStation = trainStationService.getTrainStationById(destinationId);
             return connectionRepository.findAllByDestinationStation(destinationStation);
         }
