@@ -88,6 +88,8 @@ button:hover{
 }
 
 #arrowIcon{
+    width: 3rem;
+    height: 3rem;
     font-size: 2.5rem;
     color: #ffda59;   
 }
