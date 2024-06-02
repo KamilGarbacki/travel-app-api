@@ -5,8 +5,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(path="api/connection")
+@RequestMapping(path="/api/connection")
 @RequiredArgsConstructor
 public class ConnectionController {
 
@@ -40,7 +41,7 @@ public class ConnectionController {
 
     @GetMapping("/stations/{departureId}/{destinationId}")
     public List<Connection> getConnectionsByDepartureAndDestination(@PathVariable("departureId") Long departureId,
-                                                                   @PathVariable("destinationId") Long destinationId){
+                                                                    @PathVariable("destinationId") Long destinationId){
         return connectionService.getConnectionsByDepartureAndDestination(departureId, destinationId);
     }
 }

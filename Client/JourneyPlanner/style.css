@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
 *{
     margin: 0;
     padding: 0;
-    font-family: Poppins;
+    font-family: Lexend;
 }
 
 body{
@@ -12,6 +12,7 @@ body{
 
 button:hover{
     cursor: pointer;
+    background-color: #beba65;
 }
 
 .topBar{
@@ -30,7 +31,6 @@ button:hover{
 }
 
 .barBtn{
-    /* background-color: #fff97a; */
     background: none;
     color: white;
 
@@ -93,7 +93,9 @@ button:hover{
     font-size: 2.5rem;
     color: #ffda59;   
 }
-
+#findConnection:hover{
+    background-color: #beba65;
+}
 #findConnection{
     height: 3.5rem;
     width: 8rem;
@@ -106,14 +108,17 @@ button:hover{
     align-items: center;
     justify-content: center;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
 }
 .connectionCard{
     background-color: #444650;
-    width: 70%;
+    width: 92%;
     height: 7.5rem;
     display: flex;
     border-radius: 1rem;
+    margin: 10px;
 }
 
 .opperatorContainer{
@@ -131,16 +136,23 @@ button:hover{
     height: 6rem;
     border-radius: 1rem;
 }
+.cardData{
+    width: 100%
+}
 
 .timeAndPrice{
     height: 3.75rem;
     display: flex;
+    margin-left: 0;
+    margin-right: auto;
 }
 
 .time{
+    width: 64rem;
+    justify-content: space-between;
     display: flex;
     gap: 1rem;
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-top: 5px;
     margin-left: 1rem;
 }
@@ -159,17 +171,20 @@ button:hover{
 .price{
     font-weight: 600;
     font-size: 2.5rem;
-    margin: 5px;
-    margin-left: 5rem;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: 5rem;
     color: #fff97a;
 }
 
 .inputAndBtn{
     display: flex;
+    margin-right: 0;
 }
 
 .emailInput{
-    width: 43rem;
+    width: 64rem;
     height: 2rem;
     padding: 5px;
     padding-left: 10px;
@@ -183,6 +198,7 @@ button:hover{
 }
 
 .bookBtn{
+    margin-right: 0;
     width: 10rem;
     height: 3rem;
     background-color: #fff97a;

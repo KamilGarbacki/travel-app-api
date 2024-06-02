@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ETrainsi</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/assets/uicons-thin-rounded/svg/fi-tr-arrow-square-right.svg"
+    />
+    <link
+      href="/assets/uicons-thin-rounded/css/uicons-thin-rounded.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="topBar">
+      <div id="pageName">ETrains</div>
+      <div class="btnContainer">
+        <a href="/JourneyPlanner/index.html">
+          <button class="barBtn" id="mainPageBtn">JOURNEY PLANNER</button>
+        </a>
+        <a href="/TrainStations/index.html">
+          <button class="barBtn" id="stationsList">TRAIN STATIONS</button>
+        </a>
+        <a href="/Register\index.html">
+          <button class="barBtn" id="registerBtn">REGISTER</button>
+        </a>
+        <a href="/User/index.html">
+          <button class="barBtn" id="userPageBtn">USER</button>
+        </a>
+      </div>
+    </div>
+    <div class="plannerBar">
+      <form class="plannerForm">
+        <input
+          class="inputBox"
+          id="departureCity"
+          type="text"
+          placeholder="Departure Station"
+        />
+        <i class="fi-tr-arrow-square-right" id="arrowIcon"></i>
+        <input
+          class="inputBox"
+          id="arrivalCity"
+          type="text"
+          placeholder="Destination Station"
+        />
+      </form>
+      <button id="findConnection">Find connection</button>
+    </div>
+    <br />
+    <div class="cardContainer"></div>
+    <script src="index.js"></script>
+  </body>
+</html>
