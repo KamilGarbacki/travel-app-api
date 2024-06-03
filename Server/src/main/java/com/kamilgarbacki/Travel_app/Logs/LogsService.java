@@ -1,6 +1,9 @@
 package com.kamilgarbacki.Travel_app.Logs;
 
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +12,7 @@ import java.util.List;
 @Service
 public class LogsService {
 
+    private static final Logger log = LoggerFactory.getLogger(LogsService.class);
     private final LogsRepository logsRepository;
 
     public void addLog(NewLogRequest request){
@@ -19,5 +23,13 @@ public class LogsService {
 
     public List<Logs> getAllLogs(){
         return logsRepository.findAll();
+    }
+
+    public void deleteLog(ObjectId id){
+        logsRepository.deleteById(id);
+    }
+
+    public void deleteAllLogs(){
+        logsRepository.deleteAll();
     }
 }

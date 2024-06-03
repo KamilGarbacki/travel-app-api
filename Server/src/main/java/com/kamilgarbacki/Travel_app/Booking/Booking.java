@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 @Entity
 @Table
 public class Booking {
@@ -28,9 +29,12 @@ public class Booking {
     private Long id;
 
     @ManyToOne
+    @ToString.Exclude
     private Passenger passenger;
 
     @ManyToOne
+    @ToString.Exclude
     private Connection connection;
     private LocalDate bookingDate;
+
 }

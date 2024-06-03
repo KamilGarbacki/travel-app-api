@@ -3,10 +3,7 @@ package com.kamilgarbacki.Travel_app.Operator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kamilgarbacki.Travel_app.Connection.Connection;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -16,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table
+@ToString
 public class Operator {
     @Id
     @SequenceGenerator(
@@ -33,6 +31,7 @@ public class Operator {
 
     @JsonIgnore
     @OneToMany(mappedBy = "operator", orphanRemoval = true)
+    @ToString.Exclude
     private List<Connection> connections;
 
     public Operator(String name, String logo) {

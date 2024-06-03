@@ -2,6 +2,8 @@ package com.kamilgarbacki.Travel_app.Booking;
 
 import com.kamilgarbacki.Travel_app.Connection.Connection;
 import com.kamilgarbacki.Travel_app.Connection.ConnectionService;
+import com.kamilgarbacki.Travel_app.Logs.LogsController;
+import com.kamilgarbacki.Travel_app.Logs.NewLogRequest;
 import com.kamilgarbacki.Travel_app.Passenger.Passenger;
 import com.kamilgarbacki.Travel_app.Passenger.PassengerService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final PassengerService passengerService;
     private final ConnectionService connectionService;
+    private final LogsController logsController;
 
     public List<Booking> getAllBookings() {
         return bookingRepository.findAll();
@@ -27,15 +30,27 @@ public class BookingService {
 
         Booking booking = Booking.builder().passenger(passenger).connection(connection).bookingDate(request.bookingDate()).build();
         bookingRepository.save(booking);
+
+        String message = "Created Booking: " + booking;
+        NewLogRequest logRequest = new NewLogRequest(message);
+        logsController.addLog(logRequest);
     }
 
     public void deleteBooking(Long bookingId) {
+        Booking booking = bookingRepository.findById(bookingId).orElse(null);
+        if (booking != null) {
+            String message = "Created Booking: " + booking;
+            NewLogRequest logRequest = new NewLogRequest(message);
+            logsController.addLog(logRequest);
+        }
         bookingRepository.deleteById(bookingId);
     }
 
     public void updateBooking(Long bookingId, NewBookingRequest request) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(()-> new IllegalStateException("Booking with id: " + bookingId + "does not exist"));
+
+        String oldBooking = booking.toString();
         if(request.passengerId() != null){
             Passenger passenger = passengerService.getPassengerById(request.passengerId());
             booking.setPassenger(passenger);
@@ -48,6 +63,9 @@ public class BookingService {
             booking.setBookingDate(request.bookingDate());
         }
         bookingRepository.save(booking);
+        String message = "Updated Booking form: " + oldBooking + " to " + booking;
+        NewLogRequest logRequest = new NewLogRequest(message);
+        logsController.addLog(logRequest);
     }
 
     public Booking getBookingById(Long bookingId) {

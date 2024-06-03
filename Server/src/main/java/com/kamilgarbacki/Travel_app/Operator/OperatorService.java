@@ -1,7 +1,9 @@
 package com.kamilgarbacki.Travel_app.Operator;
 
+import com.kamilgarbacki.Travel_app.Logs.LogsController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.kamilgarbacki.Travel_app.Logs.NewLogRequest;
 
 import java.util.List;
 
@@ -9,6 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OperatorService {
     private final OperatorRepository operatorRepository;
+    private final LogsController logsController;
 
     public List<Operator> getAllOperators() {
         return operatorRepository.findAll();
@@ -19,9 +22,19 @@ public class OperatorService {
         operator.setName(request.name());
         operator.setLogo(request.logo());
         operatorRepository.save(operator);
+
+        String message = "Created Operator: " + operator;
+        NewLogRequest logRequest = new NewLogRequest(message);
+        logsController.addLog(logRequest);
     }
 
     public void deleteOperator(Long operatorId) {
+        Operator operator = operatorRepository.findById(operatorId).orElse(null);
+        if (operator != null) {
+            String message = "Created Operator: " + operator;
+            NewLogRequest logRequest = new NewLogRequest(message);
+            logsController.addLog(logRequest);
+        }
         operatorRepository.deleteById(operatorId);
     }
 
@@ -29,6 +42,7 @@ public class OperatorService {
         Operator operator = operatorRepository.findById(operatorId)
                 .orElseThrow(()-> new IllegalStateException("Operator with name: " + operatorId + " does not exist"));
 
+        String oldOperator = operator.toString();
         if (request.name() != null && !request.name().isBlank()) {
             operator.setName(request.name());
         }
@@ -36,6 +50,9 @@ public class OperatorService {
             operator.setLogo(request.logo());
         }
         operatorRepository.save(operator);
+        String message = "Updated Operator: " + oldOperator + "to " + operator;
+        NewLogRequest logRequest = new NewLogRequest(message);
+        logsController.addLog(logRequest);
     }
 
     public Operator getOperatorById(Long operatorId) {

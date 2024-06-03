@@ -17,6 +17,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table
+@ToString
 public class Connection {
     @Id
     @SequenceGenerator(
@@ -41,6 +42,7 @@ public class Connection {
 
     @JsonIgnore
     @OneToMany(mappedBy = "connection", orphanRemoval = true)
+    @ToString.Exclude
     private List<Booking> bookings;
 
     private LocalTime departureTime;

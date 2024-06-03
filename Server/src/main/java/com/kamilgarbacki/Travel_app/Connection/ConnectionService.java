@@ -2,6 +2,8 @@ package com.kamilgarbacki.Travel_app.Connection;
 
 import com.kamilgarbacki.Travel_app.City.City;
 import com.kamilgarbacki.Travel_app.City.CityService;
+import com.kamilgarbacki.Travel_app.Logs.LogsController;
+import com.kamilgarbacki.Travel_app.Logs.NewLogRequest;
 import com.kamilgarbacki.Travel_app.Operator.Operator;
 import com.kamilgarbacki.Travel_app.Operator.OperatorService;
 import com.kamilgarbacki.Travel_app.TrainStation.TrainStation;
@@ -20,6 +22,7 @@ public class ConnectionService {
     private final OperatorService operatorService;
     private final TrainStationService trainStationService;
     private final CityService cityService;
+    private final LogsController logsController;
 
     public List<Connection> getAllConnections() {
         return connectionRepository.findAll();
@@ -36,15 +39,27 @@ public class ConnectionService {
                 .departureTime(request.departureTime()).arrivalTime(request.arrivalTime()).price(request.price()).build();
 
         connectionRepository.save(connection);
+
+        String message = "Created Connection: " + connection;
+        NewLogRequest logRequest = new NewLogRequest(message);
+        logsController.addLog(logRequest);
     }
 
     public void deleteConnection(Long connectionId) {
+        Connection connection = connectionRepository.findById(connectionId).orElse(null);
+        if (connection != null) {
+            String message = "Created Connection: " + connection;
+            NewLogRequest logRequest = new NewLogRequest(message);
+            logsController.addLog(logRequest);
+        }
         connectionRepository.deleteById(connectionId);
     }
 
     public void updateConnection(Long connectionId, NewConnectionRequest request) {
         Connection connection = connectionRepository.findById(connectionId)
                 .orElseThrow(()-> new IllegalStateException("Operator with id: " + connectionId + "does not exist"));
+
+        String oldConnection = connection.toString();
 
         if(request.operatorId() != null){
             Operator operator = operatorService.getOperatorById(request.operatorId());
@@ -68,6 +83,10 @@ public class ConnectionService {
             connection.setPrice(request.price());
         }
         connectionRepository.save(connection);
+
+        String message = "Updated Connection from: " + oldConnection.toString() + " to " + connection;
+        NewLogRequest logRequest = new NewLogRequest(message);
+        logsController.addLog(logRequest);
     }
 
     public Connection getConnection(Long connectionId) {

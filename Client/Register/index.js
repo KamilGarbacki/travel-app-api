@@ -43,8 +43,8 @@ async function postPassenger(fname, lname, email, phone){
         body: JSON.stringify({
             "email": email,
             "phone": phone,
-            "lname": lname,
-            "fname": fname
+            "lName": lname,
+            "fName": fname
         })   
     });
 }

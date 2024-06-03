@@ -3,10 +3,7 @@ package com.kamilgarbacki.Travel_app.City;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kamilgarbacki.Travel_app.TrainStation.TrainStation;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -16,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table
+@ToString
 public class City {
     @Id
     @SequenceGenerator(
@@ -31,6 +29,7 @@ public class City {
     private String name;
     @JsonIgnore
     @OneToMany(mappedBy = "city", orphanRemoval = true)
+    @ToString.Exclude
     private List<TrainStation> trainStations;
 
     public City(String name) {

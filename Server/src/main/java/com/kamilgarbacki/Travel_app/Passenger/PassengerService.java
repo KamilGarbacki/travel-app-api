@@ -27,18 +27,24 @@ public class PassengerService {
         passenger.setPhone(request.phone());
         passengerRepository.save(passenger);
 
-        String message = "Passenger added successfully";
+        String message = "Created Passenger: " + passenger;
         NewLogRequest logRequest = new NewLogRequest(message);
         logsController.addLog(logRequest);
     }
 
     public void deletePassenger(Long passengerId) {
+        Passenger passenger = passengerRepository.findById(passengerId).get();
+        String message = "Deleted Passenger: " + passenger;
+        NewLogRequest logRequest = new NewLogRequest(message);
+        logsController.addLog(logRequest);
         passengerRepository.deleteById(passengerId);
     }
 
     public void updatePassenger(Long passengerId, NewPassengerRequest request) {
         Passenger passenger = passengerRepository.findById(passengerId)
                 .orElseThrow(()-> new IllegalStateException("Passenger with id: " + passengerId + "does not exist"));
+
+        String oldPassenger = passenger.toString();
 
         if(request.fName() != null && !request.fName().isBlank()){
             passenger.setFName(request.fName());
@@ -53,6 +59,10 @@ public class PassengerService {
             passenger.setPhone(request.phone());
         }
         passengerRepository.save(passenger);
+
+        String message = "Updated Passenger from: " + oldPassenger + " to " + passenger.toString();
+        NewLogRequest logRequest = new NewLogRequest(message);
+        logsController.addLog(logRequest);
     }
 
     public Passenger getPassengerById(Long passengerId) {

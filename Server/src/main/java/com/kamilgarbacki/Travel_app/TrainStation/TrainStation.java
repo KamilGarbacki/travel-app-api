@@ -15,6 +15,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table
+@ToString
 public class TrainStation {
     @Id
     @SequenceGenerator(
@@ -34,10 +35,12 @@ public class TrainStation {
 
     @JsonIgnore
     @OneToMany(mappedBy = "departureStation", orphanRemoval = true)
+    @ToString.Exclude
     private List<Connection> Departures;
 
     @JsonIgnore
     @OneToMany(mappedBy = "destinationStation", orphanRemoval = true)
+    @ToString.Exclude
     private List<Connection> Destinations;
 
 

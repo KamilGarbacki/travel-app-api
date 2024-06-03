@@ -14,6 +14,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table
+@ToString
 public class Passenger {
     @Id
     @SequenceGenerator(
