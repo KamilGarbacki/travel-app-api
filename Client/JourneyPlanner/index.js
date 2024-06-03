@@ -9,20 +9,21 @@ document.addEventListener('DOMContentLoaded', () => {
             departureId = 0
         }
         else{
-            const departureName = document.getElementById("departureCity").value;
-            const station1 = await fetchStationByName(departureName);
-            departureId = station1.id;
+            const departureCityName =   document.getElementById("departureCity").value;
+            const departureCity = await fetchCityByName(departureCityName);
+            departureId = departureCity.id;
         }
+
         if(document.getElementById("arrivalCity").value.length == 0){
             destinationId = 0
         }
         else{
-            const destinationName = document.getElementById("arrivalCity").value;
-            const station2 = await fetchStationByName(destinationName);
-            destinationId = station2.id;
+            const destinationCityName =   document.getElementById("arrivalCity").value;
+            const destinationCity = await fetchCityByName(destinationCityName);
+            departureId = destinationCity.id
         }
 
-        fetchConnectionByStations(departureId, destinationId).then(result =>{
+        fetchConnectionsByCities(departureId, destinationId).then(result =>{
             console.log(result);
             const connections = result;
             
@@ -203,8 +204,8 @@ async function postBooking(passengerId, connectionId, bookingDate){
     });
 }
 
-async function fetchStationByName(stationName){
-    const response = await fetch('http://localhost:8080/api/trainStation/name/'+stationName, {
+async function fetchCityByName(cityName){
+    const response = await fetch('http://localhost:8080/api/city/name/'+cityName, {
         method: 'GET',
         cache: 'no-cache',
         credentials: 'same-origin',   
@@ -223,8 +224,8 @@ async function fetchPassengerByEmail(email){
     return await response.json();
 }
 
-async function fetchConnectionByStations(departureStation, destinationStation){
-    const response = await fetch('http://localhost:8080/api/connection/stations/' + departureStation + '/' + destinationStation, {
+async function fetchConnectionsByCities(departureCityId, destinationStation){
+    const response = await fetch('http://localhost:8080/api/connection/cities/' + departureCityId + '/' + destinationStation, {
         method: 'GET',
         cache: 'no-cache',
         credentials: 'same-origin',   

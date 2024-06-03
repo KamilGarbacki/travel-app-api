@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ETrainsi</title>
+    <title>LogsPanel</title>
     <link rel="stylesheet" href="style.css" />
     <link
       rel="icon"
@@ -36,26 +36,14 @@
         </a>
       </div>
     </div>
-    <div class="plannerBar">
-      <form class="plannerForm">
-        <input
-          class="inputBox"
-          id="departureCity"
-          type="text"
-          placeholder="Departure Station"
-        />
-        <i class="fi-tr-arrow-square-right" id="arrowIcon"></i>
-        <input
-          class="inputBox"
-          id="arrivalCity"
-          type="text"
-          placeholder="Destination Station"
-        />
-      </form>
-      <button id="findConnection">Find connection</button>
-    </div>
+    <hr />
     <br />
-    <div class="cardContainer"></div>
+    <div class="cardContainer">
+      <div class="logCard">
+        <div class="logDate">2024-06-05:</div>
+        <div class="logData">Sample log, nothing to see here</div>
+      </div>
+    </div>
     <script src="index.js"></script>
   </body>
 </html>
