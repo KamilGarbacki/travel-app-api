@@ -1,5 +1,7 @@
 package com.kamilgarbacki.Travel_app.Passenger;
 
+import com.kamilgarbacki.Travel_app.Logs.LogsController;
+import com.kamilgarbacki.Travel_app.Logs.NewLogRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,17 +12,24 @@ import java.util.List;
 public class PassengerService {
 
     private final PassengerRepository passengerRepository;
+    private final LogsController logsController;
 
     public List<Passenger> getAllPassengers() {
         return passengerRepository.findAll();
     }
     public void addPassenger(NewPassengerRequest request) {
         Passenger passenger = new Passenger();
+
         passenger.setFName(request.fName());
         passenger.setLName(request.lName());
+
         passenger.setEmail(request.email());
         passenger.setPhone(request.phone());
         passengerRepository.save(passenger);
+
+        String message = "Passenger added successfully";
+        NewLogRequest logRequest = new NewLogRequest(message);
+        logsController.addLog(logRequest);
     }
 
     public void deletePassenger(Long passengerId) {
