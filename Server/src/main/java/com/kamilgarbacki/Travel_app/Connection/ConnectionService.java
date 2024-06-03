@@ -1,5 +1,7 @@
 package com.kamilgarbacki.Travel_app.Connection;
 
+import com.kamilgarbacki.Travel_app.City.City;
+import com.kamilgarbacki.Travel_app.City.CityService;
 import com.kamilgarbacki.Travel_app.Operator.Operator;
 import com.kamilgarbacki.Travel_app.Operator.OperatorService;
 import com.kamilgarbacki.Travel_app.TrainStation.TrainStation;
@@ -7,6 +9,7 @@ import com.kamilgarbacki.Travel_app.TrainStation.TrainStationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,6 +19,7 @@ public class ConnectionService {
     private final ConnectionRepository connectionRepository;
     private final OperatorService operatorService;
     private final TrainStationService trainStationService;
+    private final CityService cityService;
 
     public List<Connection> getAllConnections() {
         return connectionRepository.findAll();
@@ -89,6 +93,46 @@ public class ConnectionService {
         TrainStation destinationStation = trainStationService.getTrainStationById(destinationId);
 
         return connectionRepository.findAllByDepartureStationAndDestinationStation(departureStation, destinationStation);
+    }
+
+    public List<Connection> getConnectionsByCities(Long departureCityId, Long destinationCityId) {
+        if(departureCityId == 0 && destinationCityId == 0){
+            return getAllConnections();
+        }
+
+        List<Connection> connections = new ArrayList<>();
+
+        if(departureCityId != 0 && destinationCityId == 0){
+            City city = cityService.getCityById(departureCityId);
+            List<TrainStation> stations = city.getTrainStations();
+            for(TrainStation station : stations){
+                connections.addAll(connectionRepository.findAllByDepartureStation(station));
+            }
+            return connections;
+        }
+        if(departureCityId == 0 && destinationCityId != 0){
+            City city = cityService.getCityById(destinationCityId);
+            List<TrainStation> stations = city.getTrainStations();
+            for(TrainStation station : stations){
+                connections.addAll(connectionRepository.findAllByDestinationStation(station));
+            }
+            return connections;
+        }
+
+        City departureCity = cityService.getCityById(departureCityId);
+        City destinationCity = cityService.getCityById(destinationCityId);
+
+        List<TrainStation> departureStations = departureCity.getTrainStations();
+        List<TrainStation> destinationStations = destinationCity.getTrainStations();
+
+        for(TrainStation departureStation : departureStations){
+            for(TrainStation destinationStation : destinationStations){
+                if(!(connectionRepository.findAllByDepartureStationAndDestinationStation(departureStation, destinationStation)).isEmpty()){
+                    connections.addAll(connectionRepository.findAllByDepartureStationAndDestinationStation(departureStation, destinationStation));
+                }
+            }
+        }
+        return connections;
     }
 }
 

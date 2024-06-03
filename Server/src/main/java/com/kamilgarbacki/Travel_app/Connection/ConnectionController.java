@@ -44,4 +44,10 @@ public class ConnectionController {
                                                                     @PathVariable("destinationId") Long destinationId){
         return connectionService.getConnectionsByDepartureAndDestination(departureId, destinationId);
     }
+
+    @GetMapping("/cities/{departureId}/{destinationId}")
+    public List<Connection> getConnectionsByCities(@PathVariable("departureId") Long departureCityId,
+                                                   @PathVariable("destinationId") Long destinationCityId){
+        return connectionService.getConnectionsByCities(departureCityId, destinationCityId);
+    }
 }

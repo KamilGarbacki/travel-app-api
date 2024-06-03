@@ -44,6 +44,9 @@ button:hover{
     margin-right: 1rem;
 
 }
+.barBtn:hover{
+    background-color: #beba65;
+}
 
 #pageName{
     color: #fff97a;

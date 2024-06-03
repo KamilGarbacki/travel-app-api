@@ -41,4 +41,9 @@ public class TrainStationController {
     public TrainStation getTrainStationByName(@PathVariable("trainStationName") String trainStationName) {
         return trainStationService.getTrainStationByName(trainStationName);
     }
+
+    @GetMapping("/cityName/{cityName}")
+    public List<TrainStation> getTrainStationByCity(@PathVariable("cityName") String cityName){
+        return trainStationService.getTrainStationByCity(cityName);
+    }
 }

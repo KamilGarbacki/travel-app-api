@@ -111,23 +111,37 @@ document.addEventListener('DOMContentLoaded', () => {
                                
             });
             const bookingButtons = document.querySelectorAll('.bookBtn');
-                bookingButtons.forEach(function(bookingButton){
-                    bookingButton.addEventListener('click', function(){
-                        const connectionId = bookingButton.id
-                        const inputEmail = document.getElementById("Input" + connectionId);
-                        const email = inputEmail.value;
-                    
-                        fetchPassengerByEmail(email).then(passenger =>{
-                            
-                            fetchConnectionById(connectionId).then(connection =>{
-                            const date = new Date();
-                            const bookingDate = formatDate(date);
-                            postBooking(passenger.id, connection.id, bookingDate).then(()=>{return});
-                    
-                            })
-                        })                        
-                    }) 
+            bookingButtons.forEach(function(bookingButton){
+                bookingButton.addEventListener('click', function(){
+                    const connectionId = bookingButton.id
+                    const inputEmail = document.getElementById("Input" + connectionId);
+                    const email = inputEmail.value;
+
+                    if(email.length == 0){
+                        alert("Email Field is required!")
+                        return;
+                    }
+                    if(!email.includes("@") || !email.includes(".com")){
+                        alert("Email is not valid!");
+                        return;
+                    }
+                
+                    fetchPassengerByEmail(email).then(passenger =>{
+                        
+                        if(passenger.status == 500){
+                            alert("Passenger with this email doesnt exist.")
+                            return
+                        }
+
+                        fetchConnectionById(connectionId).then(connection =>{
+                        const date = new Date();
+                        const bookingDate = formatDate(date);
+                        postBooking(passenger.id, connection.id, bookingDate).then(()=>{return});
+                        alert("Train booked successfully")
+                        })
+                    })                        
                 }) 
+            }) 
         })
 
     })

@@ -51,5 +51,10 @@ public class TrainStationService {
                 .orElseThrow(()-> new IllegalStateException("Train station with name: " + trainStationName + "does not exist"));
     }
 
+    public List<TrainStation> getTrainStationByCity(String cityName) {
+        City city = cityService.getCityByName(cityName);
+        return trainStationRepository.findAllByCity(city);
+    }
+
 
 }

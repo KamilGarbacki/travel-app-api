@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('search').addEventListener('click', function() {
+    document.getElementById('search').addEventListener('click', function btnPressed() {
 
         const email = document.getElementById("inputBox").value;
 
@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
                     const deleteBtn = document.createElement('button');
                     deleteBtn.className = 'deleteBtn';
+                    deleteBtn.id = booking.id;
                     deleteBtn.textContent = 'Delete Booking';
         
                     const finalPrice = document.createElement('div');
@@ -128,23 +129,32 @@ document.addEventListener('DOMContentLoaded', () => {
         
                     inputAndBtn.appendChild(deleteBtn);
                     inputAndBtn.appendChild(finalPrice);
-        
-                    // Append timeAndPrice and inputAndBtn to cardData
+
                     cardData.appendChild(timeAndPrice);
                     cardData.appendChild(inputAndBtn);
-        
-                    // Append opperatorContainer and cardData to connectionCard
+
                     connectionCard.appendChild(opperatorContainer);
                     connectionCard.appendChild(cardData);
-        
-                    // Append bookingDate and connectionCard to bookingCard
+
                     bookingCard.appendChild(bookingDate);
                     bookingCard.appendChild(connectionCard);
-        
-                    // Append the bookingCard to the cardContainer div
+
                     document.querySelector('.cardContainer').appendChild(bookingCard);                            
                 });
+
+                const deleteButtons = Array.from(document.querySelectorAll('.deleteBtn'));
+                deleteButtons.forEach(function(deleteButton){
+                    deleteButton.addEventListener('click', function(){
+                        const bookingId = deleteButton.id
+                        deleteBooking(bookingId).then(()=>{
+                            alert("Booking removed");
+                        })
+                        btnPressed();                
+                    }) 
+                })                  
             })
+            
+            
         })
 
         
@@ -198,6 +208,13 @@ function timeDifference(time1, time2) {
     let formattedMinutes = diffMinutes.toString().padStart(2, '0');
 
     return `${formattedHours}:${formattedMinutes}`;
+}
+async function deleteBooking(bookingId){
+    const response = await fetch('http://localhost:8080/api/booking/' + bookingId, {
+        method: 'DELETE',
+        cache: 'no-cache',
+        credentials: 'same-origin',   
+    });
 }
 
 async function postBooking(passengerId, connectionId, bookingDate){
