@@ -116,7 +116,8 @@ button:hover{
 }
 .connectionCard{
     background-color: #444650;
-    width: 92%;
+    width: fit-content;
+    min-width: 80%;
     height: 7.5rem;
     display: flex;
     border-radius: 1rem;
@@ -150,23 +151,24 @@ button:hover{
 }
 
 .time{
-    width: 64rem;
+    width: 55rem;
     justify-content: space-between;
     display: flex;
-    gap: 1rem;
-    font-size: 2rem;
+    gap: 5px;
+    font-size: 200%;
     margin-top: 5px;
     margin-left: 1rem;
+    margin-right: 1rem;
 }
 
 .travelTime{
     /*background-color: #ffe792;*/
     color:#fff97a;
-    padding-left: 18px;
-    padding-right: 17px;
+    padding-left: 8px;
+    padding-right: 8px;
     padding-bottom: 4px;
     padding-top: 4px;
-    font-size: 2rem;
+    font-size: 100%;
     border-radius: 2.5rem;
 }
 
@@ -176,7 +178,7 @@ button:hover{
     margin-top: 5px;
     margin-bottom: 5px;
     margin-left: auto;
-    margin-right: 5rem;
+    margin-right: 2.6rem;
     color: #fff97a;
 }
 
@@ -185,8 +187,14 @@ button:hover{
     margin-right: 0;
 }
 
+.formClass{
+    width: 100%;
+    text-align: left;
+}
+
 .emailInput{
-    width: 64rem;
+    /* min-width: 10rem; */
+    width: 94%;
     height: 2rem;
     padding: 5px;
     padding-left: 10px;
@@ -200,8 +208,8 @@ button:hover{
 }
 
 .bookBtn{
-    margin-right: 0;
-    width: 10rem;
+    margin-right: 1rem;
+    width: 13%;
     height: 3rem;
     background-color: #fff97a;
     border-radius: 1rem;

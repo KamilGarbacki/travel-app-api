@@ -19,13 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else{
             const destinationCityName =   document.getElementById("arrivalCity").value;
+            console.log(destinationCityName);
             const destinationCity = await fetchCityByName(destinationCityName);
-            departureId = destinationCity.id
+            console.log(destinationCity);
+            destinationId = destinationCity.id;
         }
 
-        fetchConnectionsByCities(departureId, destinationId).then(result =>{
-            console.log(result);
-            const connections = result;
+        fetchConnectionsByCities(departureId, destinationId).then(connections =>{
+            console.log(connections);
             
             const cardContainer = document.querySelector('.cardContainer');
 
@@ -85,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 inputAndBtn.className = 'inputAndBtn';
 
                 const form = document.createElement('form');
+                form.className = 'formClass';
                 const emailInput = document.createElement('input');
                 emailInput.type = 'text';
                 emailInput.className = 'emailInput';
