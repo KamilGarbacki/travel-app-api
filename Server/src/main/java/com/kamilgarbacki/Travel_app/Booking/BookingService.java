@@ -2,6 +2,7 @@ package com.kamilgarbacki.Travel_app.Booking;
 
 import com.kamilgarbacki.Travel_app.Connection.Connection;
 import com.kamilgarbacki.Travel_app.Connection.ConnectionService;
+import com.kamilgarbacki.Travel_app.Exception.ResourceNotFound;
 import com.kamilgarbacki.Travel_app.Logs.LogsController;
 import com.kamilgarbacki.Travel_app.Logs.NewLogRequest;
 import com.kamilgarbacki.Travel_app.Passenger.Passenger;
@@ -48,7 +49,7 @@ public class BookingService {
 
     public void updateBooking(Long bookingId, NewBookingRequest request) {
         Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(()-> new IllegalStateException("Booking with id: " + bookingId + "does not exist"));
+                .orElseThrow(()-> new ResourceNotFound("Booking with id: " + bookingId + "does not exist"));
 
         String oldBooking = booking.toString();
         if(request.passengerId() != null){
@@ -70,7 +71,7 @@ public class BookingService {
 
     public Booking getBookingById(Long bookingId) {
         return bookingRepository.findById(bookingId)
-                .orElseThrow(()-> new IllegalStateException("Booking with id: " + bookingId + "does not exist"));
+                .orElseThrow(()-> new ResourceNotFound("Booking with id: " + bookingId + "does not exist"));
     }
 
     public List<Booking> getBookingsByPassengerId(Long passengerId) {

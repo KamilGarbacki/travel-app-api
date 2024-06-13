@@ -1,5 +1,6 @@
 package com.kamilgarbacki.Travel_app.Passenger;
 
+import com.kamilgarbacki.Travel_app.Exception.ResourceNotFound;
 import com.kamilgarbacki.Travel_app.Logs.LogsController;
 import com.kamilgarbacki.Travel_app.Logs.NewLogRequest;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,7 @@ public class PassengerService {
 
     public void updatePassenger(Long passengerId, NewPassengerRequest request) {
         Passenger passenger = passengerRepository.findById(passengerId)
-                .orElseThrow(()-> new IllegalStateException("Passenger with id: " + passengerId + "does not exist"));
+                .orElseThrow(()-> new ResourceNotFound("Passenger with id: " + passengerId + "does not exist"));
 
         String oldPassenger = passenger.toString();
 
@@ -67,12 +68,12 @@ public class PassengerService {
 
     public Passenger getPassengerById(Long passengerId) {
         return passengerRepository.findById(passengerId)
-                        .orElseThrow(()-> new IllegalStateException("Passenger with id: " + passengerId + "does not exist"));
+                        .orElseThrow(()-> new ResourceNotFound("Passenger with id: " + passengerId + "does not exist"));
     }
 
     public Passenger getPassengerByEmail(String passengerEmail) {
         return passengerRepository.findByEmail(passengerEmail)
-                .orElseThrow(()-> new IllegalStateException("Passenger with email: " + passengerEmail + "does not exist"));
+                .orElseThrow(()-> new ResourceNotFound("Passenger with email: " + passengerEmail + "does not exist"));
     }
 
 

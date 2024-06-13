@@ -1,5 +1,6 @@
 package com.kamilgarbacki.Travel_app.City;
 
+import com.kamilgarbacki.Travel_app.Exception.ResourceNotFound;
 import com.kamilgarbacki.Travel_app.Logs.LogsController;
 import com.kamilgarbacki.Travel_app.Logs.NewLogRequest;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,7 @@ public class CityService {
     }
 
     public void updateCity(Long cityId, NewCityRequest request) {
-        City city = cityRepository.findById(cityId).orElseThrow(()-> new IllegalStateException("Train station with cityId: " + cityId + "does not exist"));
+        City city = cityRepository.findById(cityId).orElseThrow(()-> new ResourceNotFound("Train station with cityId: " + cityId + "does not exist"));
         String odlCity = city.toString();
         if (request.name() != null && !request.name().isBlank()) {
             city.setName(request.name());
@@ -50,10 +51,10 @@ public class CityService {
     }
 
     public City getCityById(Long cityId) {
-        return cityRepository.findById(cityId).orElseThrow(()-> new IllegalStateException("Train station with cityId: " + cityId + "does not exist"));
+        return cityRepository.findById(cityId).orElseThrow(()-> new ResourceNotFound("Train station with cityId: " + cityId + "does not exist"));
     }
 
     public City getCityByName(String cityName) {
-        return cityRepository.findByName(cityName).orElseThrow(()-> new IllegalStateException("Train station with cityId: " + cityName + "does not exist"));
+        return cityRepository.findByName(cityName).orElseThrow(()-> new ResourceNotFound("Train station with cityId: " + cityName + "does not exist"));
     }
 }

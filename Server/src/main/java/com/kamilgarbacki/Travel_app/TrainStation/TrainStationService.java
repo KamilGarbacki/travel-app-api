@@ -2,6 +2,7 @@ package com.kamilgarbacki.Travel_app.TrainStation;
 
 import com.kamilgarbacki.Travel_app.City.City;
 import com.kamilgarbacki.Travel_app.City.CityService;
+import com.kamilgarbacki.Travel_app.Exception.ResourceNotFound;
 import com.kamilgarbacki.Travel_app.Logs.LogsController;
 import com.kamilgarbacki.Travel_app.Logs.NewLogRequest;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,7 @@ public class TrainStationService {
 
     public void updateTrainStation(Long trainStationId, NewTrainStationRequest request) {
         TrainStation trainStation = trainStationRepository.findById(trainStationId)
-                .orElseThrow(()-> new IllegalStateException("Train station with id: " + trainStationId + "does not exist"));
+                .orElseThrow(()-> new ResourceNotFound("Train station with id: " + trainStationId + "does not exist"));
 
         String oldTrainStation = trainStation.toString();
 
@@ -62,12 +63,12 @@ public class TrainStationService {
 
     public TrainStation getTrainStationById(Long trainStationId) {
         return trainStationRepository.findById(trainStationId)
-                .orElseThrow(()-> new IllegalStateException("Train station with id: " + trainStationId + "does not exist"));
+                .orElseThrow(()-> new ResourceNotFound("Train station with id: " + trainStationId + "does not exist"));
     }
 
     public TrainStation getTrainStationByName(String trainStationName) {
         return trainStationRepository.findByName(trainStationName)
-                .orElseThrow(()-> new IllegalStateException("Train station with name: " + trainStationName + "does not exist"));
+                .orElseThrow(()-> new ResourceNotFound("Train station with name: " + trainStationName + "does not exist"));
     }
 
     public List<TrainStation> getTrainStationByCity(String cityName) {

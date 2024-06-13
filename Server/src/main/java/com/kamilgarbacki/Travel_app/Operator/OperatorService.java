@@ -1,5 +1,6 @@
 package com.kamilgarbacki.Travel_app.Operator;
 
+import com.kamilgarbacki.Travel_app.Exception.ResourceNotFound;
 import com.kamilgarbacki.Travel_app.Logs.LogsController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class OperatorService {
 
     public void updateOperator(Long operatorId,NewOperatorRequest request) {
         Operator operator = operatorRepository.findById(operatorId)
-                .orElseThrow(()-> new IllegalStateException("Operator with name: " + operatorId + " does not exist"));
+                .orElseThrow(()-> new ResourceNotFound("Operator with name: " + operatorId + " does not exist"));
 
         String oldOperator = operator.toString();
         if (request.name() != null && !request.name().isBlank()) {
@@ -57,11 +58,11 @@ public class OperatorService {
 
     public Operator getOperatorById(Long operatorId) {
         return operatorRepository.findById(operatorId)
-                .orElseThrow(()-> new IllegalStateException("Operator with name: " + operatorId + " does not exist"));
+                .orElseThrow(()-> new ResourceNotFound("Operator with name: " + operatorId + " does not exist"));
     }
 
     public Operator getOperatorByName(String operatorName) {
         return operatorRepository.findByName(operatorName)
-                .orElseThrow(()-> new IllegalStateException("Operator with name: " + operatorName + " does not exist"));
+                .orElseThrow(()-> new ResourceNotFound("Operator with name: " + operatorName + " does not exist"));
     }
 }
