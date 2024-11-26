@@ -43,5 +43,4 @@ public class TrainStation {
     @ToString.Exclude
     private List<Connection> Destinations;
 
-
 }

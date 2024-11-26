@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface TrainStationRepository extends JpaRepository<TrainStation, Long> {
     Optional<TrainStation> findByName(String trainStationName);
-    List<TrainStation> findAllByCity(City city);
+    List<TrainStation> findAllByCityName(String cityName);
 }

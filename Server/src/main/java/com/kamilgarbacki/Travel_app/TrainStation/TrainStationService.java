@@ -43,14 +43,14 @@ public class TrainStationService {
 
     public void updateTrainStation(Long trainStationId, NewTrainStationRequest request) {
         TrainStation trainStation = trainStationRepository.findById(trainStationId)
-                .orElseThrow(()-> new ResourceNotFound("Train station with id: " + trainStationId + "does not exist"));
+                .orElseThrow(() -> new ResourceNotFound("Train station with id: " + trainStationId + "does not exist"));
 
         String oldTrainStation = trainStation.toString();
 
-        if(request.name() != null && !request.name().isBlank()) {
+        if (request.name() != null && !request.name().isBlank()) {
             trainStation.setName(request.name());
         }
-        if(request.cityId() != null) {
+        if (request.cityId() != null) {
             City city = cityService.getCityById(request.cityId());
             trainStation.setCity(city);
         }
@@ -63,18 +63,15 @@ public class TrainStationService {
 
     public TrainStation getTrainStationById(Long trainStationId) {
         return trainStationRepository.findById(trainStationId)
-                .orElseThrow(()-> new ResourceNotFound("Train station with id: " + trainStationId + "does not exist"));
+                .orElseThrow(() -> new ResourceNotFound("Train station with id: " + trainStationId + "does not exist"));
     }
 
     public TrainStation getTrainStationByName(String trainStationName) {
         return trainStationRepository.findByName(trainStationName)
-                .orElseThrow(()-> new ResourceNotFound("Train station with name: " + trainStationName + "does not exist"));
+                .orElseThrow(() -> new ResourceNotFound("Train station with name: " + trainStationName + "does not exist"));
     }
 
     public List<TrainStation> getTrainStationByCity(String cityName) {
-        City city = cityService.getCityByName(cityName);
-        return trainStationRepository.findAllByCity(city);
+        return trainStationRepository.findAllByCityName(cityName);
     }
-
-
 }

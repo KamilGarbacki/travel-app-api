@@ -30,13 +30,16 @@ public class PassengerService {
 
         String message = "Created Passenger: " + passenger;
         NewLogRequest logRequest = new NewLogRequest(message);
+
         logsController.addLog(logRequest);
     }
 
     public void deletePassenger(Long passengerId) {
-        Passenger passenger = passengerRepository.findById(passengerId).get();
+        Passenger passenger = passengerRepository.findById(passengerId).orElseThrow(() ->
+                new ResourceNotFound("Passenger not found"));
         String message = "Deleted Passenger: " + passenger;
         NewLogRequest logRequest = new NewLogRequest(message);
+
         logsController.addLog(logRequest);
         passengerRepository.deleteById(passengerId);
     }
@@ -44,7 +47,6 @@ public class PassengerService {
     public void updatePassenger(Long passengerId, NewPassengerRequest request) {
         Passenger passenger = passengerRepository.findById(passengerId)
                 .orElseThrow(()-> new ResourceNotFound("Passenger with id: " + passengerId + "does not exist"));
-
         String oldPassenger = passenger.toString();
 
         if(request.fName() != null && !request.fName().isBlank()){
@@ -59,6 +61,7 @@ public class PassengerService {
         if(request.phone() != null && !request.phone().isBlank()){
             passenger.setPhone(request.phone());
         }
+
         passengerRepository.save(passenger);
 
         String message = "Updated Passenger from: " + oldPassenger + " to " + passenger.toString();

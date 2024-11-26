@@ -14,6 +14,7 @@ public class TrainStationController {
     public TrainStationController(TrainStationService trainStationService) {
         this.trainStationService = trainStationService;
     }
+
     @GetMapping
     public List<TrainStation> getAllTrainStations() {
         return trainStationService.getAllTrainStations();
@@ -32,6 +33,7 @@ public class TrainStationController {
                                    @RequestBody NewTrainStationRequest request) {
         trainStationService.updateTrainStation(trainStationId, request);
     }
+
     @GetMapping("/id/{trainStationId}")
     public TrainStation getTrainStationById(@PathVariable("trainStationId") Long trainStationId){
         return trainStationService.getTrainStationById(trainStationId);
